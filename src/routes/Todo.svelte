@@ -82,7 +82,7 @@ button[type="submit"]:active {
     background-color: white;
     border: 2px solid #ccc;
     border-radius: 8px;
-    padding: 20px;
+    padding: 20px 40px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 
@@ -95,9 +95,17 @@ ul {
 li {
     padding: 10px;
     border-bottom: 1px solid #eee;
+    position: relative;
   }
 
 li:last-child {
     border-bottom: none;
   }
+li::before {
+    content: '○';
+    color: #DC7AC0; 
+    font-size: 20px;
+    position: absolute;
+    left: -20px; 
+}
 </style>
