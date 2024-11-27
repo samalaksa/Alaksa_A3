@@ -1,15 +1,23 @@
 <script>
+import trashIcon from "$lib/img/trash.png"
 let todoItem = $state('');
 let todoList = $state([]);
 
-function addItem() {
+function addItem(event) {
     event.preventDefault();
     if (todoItem == '') {
         return;
     }
-    todoList.push(todoItem);
-    todoItem = '';
+    todoList = [...todoList, {
+        text: todoItem,
+        done: false
+    }];
+    todoItem = "";
 }
+function removeItem(index) {
+    todoList = todoList.toSpliced(index, 1);
+}
+
 
 $inspect(todoList);
 </script>
@@ -21,14 +29,17 @@ $inspect(todoList);
 
 <div class="todo-list-container">
     <ul>
-        {#each todoList as item}
-            <li>{item}</li>
+        {#each todoList as item, index}
+            <li>
+                <input type="checkbox" bind:checked={item.done}>
+                <span class:done={item.done}>{item.text}</span>
+                <button type="button" aria-label="delete" onclick={()  => removeItem(index)}><img class="trash" src="{trashIcon}" alt="trash"></button>
+            </li>
         {/each}
     </ul>   
 </div>
-
-
 <style>
+
 /* input bar */
 form {
     display: flex;
@@ -84,6 +95,9 @@ button[type="submit"]:active {
     border-radius: 8px;
     padding: 20px 40px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: "Fira Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
   }
 
 ul {
@@ -101,11 +115,8 @@ li {
 li:last-child {
     border-bottom: none;
   }
-li::before {
-    content: '○';
-    color: #DC7AC0; 
-    font-size: 20px;
-    position: absolute;
-    left: -20px; 
+span.done {
+    color: #DC7AC0;
+    text-decoration: line-through;
 }
 </style>
