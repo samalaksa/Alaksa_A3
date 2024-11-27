@@ -3,6 +3,6 @@
     import '../app.css';
 </script>
 
-<h1>Self Care To Do App</h1>
-
+<h2>Self Care</h2>
+<h1>To Do List</h1>
 <Todo />
