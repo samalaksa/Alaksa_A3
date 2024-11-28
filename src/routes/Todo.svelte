@@ -2,6 +2,7 @@
 import trashIcon from "$lib/img/trash.png"
 import editIcon from "$lib/img/pen.png"
 import checkmIcon from "$lib/img/checkM.png"
+import flowerImg from "$lib/img/flower.png"
 let todoItem = $state('');
 let todoList = $state([]);
 
@@ -73,8 +74,28 @@ $inspect(todoList);
         {/each}
     </ul>   
 </div>
-<style>
+<div class="flower-image-container">
+  <img src="{flowerImg}" alt="Flower"/>
+</div>
 
+<style>
+  /* flower image */
+  .flower-image-container {
+      position: fixed; 
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: -1;
+      text-align: right;
+      pointer-events: none; 
+  }
+
+  .flower-image-container img {
+      width: auto;
+      height: 400px;
+      margin-left: 450px; 
+      opacity: 20%;
+  }
 /* input bar */
 form {
     display: flex;
