@@ -1,5 +1,7 @@
 <script>
 import trashIcon from "$lib/img/trash.png"
+import editIcon from "$lib/img/pen.png"
+import checkmIcon from "$lib/img/checkM.png"
 let todoItem = $state('');
 let todoList = $state([]);
 
@@ -10,15 +12,24 @@ function addItem(event) {
     }
     todoList = [...todoList, {
         text: todoItem,
-        done: false
+        done: false,
+        isEditing: false,
     }];
     todoItem = "";
 }
 function removeItem(index) {
     todoList = todoList.toSpliced(index, 1);
 }
-
-
+function toggleEdit(index) {
+  todoList = todoList.map((item, i) =>
+  i === index ? { ...item, isEditing: !item.isEditing } : item
+  );
+}
+function updateItem(index, newText) {
+  todoList = todoList.map((item, i) =>
+  i === index ? { ...item, text: newText, isEditing: false } : item
+  );
+}
 $inspect(todoList);
 </script>
 
@@ -31,9 +42,33 @@ $inspect(todoList);
     <ul>
         {#each todoList as item, index}
             <li>
-                <input type="checkbox" bind:checked={item.done}>
-                <span class:done={item.done}>{item.text}</span>
-                <button type="button" aria-label="delete" onclick={()  => removeItem(index)}><img class="trash" src="{trashIcon}" alt="trash"></button>
+              {#if item.isEditing}
+              <div class="todo-item">
+              <input
+                type="text"
+                bind:value={item.text}
+                onkeydown={(event) => {
+                  if (event.key === 'Enter') updateItem(index, item.text);
+                }}
+                />
+                <button type="savebutton" aria-label="save" onclick={() => updateItem(index, item.text)}>
+                <img class="save" src="{checkmIcon}" alt="Save" />
+                </button>
+              </div>
+              {:else}
+              <div class="todo-item">
+                <div class="text-container">
+                  <input type="checkbox" bind:checked={item.don}/>
+                  <span class:done={item.done}>{item.text}</span>
+                  </div>
+                  <div class="button-container">
+                  <button type="editbutton" aria-label="edit" onclick={() => toggleEdit(index)}>
+                  <img class="edit" src="{editIcon}" alt="Edit" />
+                  </button>
+                  <button type="deletebutton" aria-label="delete" onclick={()  => removeItem(index)}><img class="trash" src="{trashIcon}" alt="trash"/></button>
+                </div>
+              </div>
+              {/if}
             </li>
         {/each}
     </ul>   
@@ -85,6 +120,87 @@ button {
 button[type="submit"]:active {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
   }
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+}
+.text-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.button-container {
+  display: flex;
+  gap: 10px;
+}
+/* delete button */
+button[type="deletebutton"] {
+  background: none; 
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+button[type="deletebutton"]:focus {
+  outline: none;
+}
+
+.trash {
+  width: 20px;
+  height: 20px;
+  display: block;
+  pointer-events: none;
+}
+/* edit button */
+button[type="editbutton"] {
+  background: none; 
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+button[type="editbutton"]:focus {
+  outline: none;
+}
+
+.edit {
+  width: 28px;
+  height: 28px;
+  display: block;
+  pointer-events: none;
+}
+/* save button */
+.todo-item input[type="text"] {
+    flex: 1; /* Allow the input to take available space */
+    padding: 8px;
+    font-size: 14px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="savebutton"] {
+  background: none; 
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+button[type="savebutton"]:focus {
+  outline: none;
+}
+
+.save {
+  width: 28px;
+  height: 28px;
+  display: block;
+  pointer-events: none;
+}
 
 /* White rectangle for the list */
 .todo-list-container {
@@ -107,6 +223,8 @@ ul {
   }
 
 li {
+    display: flex;
+    align-items: center;
     padding: 10px;
     border-bottom: 1px solid #eee;
     position: relative;
