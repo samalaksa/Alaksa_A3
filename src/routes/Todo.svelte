@@ -43,28 +43,28 @@ $inspect(todoList);
         {#each todoList as item, index}
             <li>
               {#if item.isEditing}
-              <div class="todo-item">
-              <input
-                type="text"
-                bind:value={item.text}
-                onkeydown={(event) => {
-                  if (event.key === 'Enter') updateItem(index, item.text);
-                }}
-                />
-                <button type="savebutton" aria-label="save" onclick={() => updateItem(index, item.text)}>
-                <img class="save" src="{checkmIcon}" alt="Save" />
-                </button>
-              </div>
+                <div class="todo-item">
+                  <input
+                    type="text"
+                    bind:value={item.text}
+                    onkeydown={(event) => {
+                      if (event.key === 'Enter') updateItem(index, item.text);
+                    }}
+                    />
+                  <button type="savebutton" aria-label="save" onclick={() => updateItem(index, item.text)}>
+                    <img class="save" src="{checkmIcon}" alt="Save" />
+                  </button>
+                </div>
               {:else}
               <div class="todo-item">
                 <div class="text-container">
-                  <input type="checkbox" bind:checked={item.don}/>
-                  <span class:done={item.done}>{item.text}</span>
-                  </div>
-                  <div class="button-container">
-                  <button type="editbutton" aria-label="edit" onclick={() => toggleEdit(index)}>
-                  <img class="edit" src="{editIcon}" alt="Edit" />
-                  </button>
+                  <input type="checkbox" bind:checked={item.done}/>
+                    <span class:done={item.done}>{item.text}</span>
+                      </div>
+                        <div class="button-container">
+                        <button type="editbutton" aria-label="edit" onclick={() => toggleEdit(index)}>
+                      <img class="edit" src="{editIcon}" alt="Edit" />
+                    </button>
                   <button type="deletebutton" aria-label="delete" onclick={()  => removeItem(index)}><img class="trash" src="{trashIcon}" alt="trash"/></button>
                 </div>
               </div>
@@ -74,7 +74,6 @@ $inspect(todoList);
     </ul>   
 </div>
 <style>
-
 /* input bar */
 form {
     display: flex;
@@ -114,7 +113,9 @@ button[type="submit"]:hover {
   }
   
 button {
-    font-family: "Emblema One", system-ui;
+    font-family: "Fira Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
   }
 
 button[type="submit"]:active {
@@ -135,6 +136,44 @@ button[type="submit"]:active {
 .button-container {
   display: flex;
   gap: 10px;
+}
+/* checkbox */
+.text-container input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border: 2px solid #DC7AC0; 
+  border-radius: 4px; 
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: #fff;
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.text-container input[type="checkbox"]:focus {
+  box-shadow: 0 0 4px 2px rgba(220, 122, 192, 0.5);
+}
+
+.text-container input[type="checkbox"]:checked {
+  background-color: #DC7AC0;
+  border-color: #DC7AC0;
+}
+
+.text-container input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 4.5px;
+  width: 5px;
+  height: 9px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  display: block;
 }
 /* delete button */
 button[type="deletebutton"] {
@@ -174,9 +213,16 @@ button[type="editbutton"]:focus {
   display: block;
   pointer-events: none;
 }
+
+/* edit bar */ 
+.todo-item input[type="text"]:focus {
+  border-color: #DC7AC0;
+  box-shadow: 0 0 5px rgba(255, 39, 241, 0.5);
+}
+
 /* save button */
 .todo-item input[type="text"] {
-    flex: 1; /* Allow the input to take available space */
+    flex: 1;
     padding: 8px;
     font-size: 14px;
     border: 2px solid #ccc;
@@ -196,8 +242,8 @@ button[type="savebutton"]:focus {
 }
 
 .save {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   display: block;
   pointer-events: none;
 }
@@ -234,7 +280,7 @@ li:last-child {
     border-bottom: none;
   }
 span.done {
-    color: #DC7AC0;
+    color: #f6d9ee;
     text-decoration: line-through;
 }
 </style>
