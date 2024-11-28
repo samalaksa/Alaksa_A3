@@ -74,6 +74,7 @@ $inspect(todoList);
     </ul>   
 </div>
 <style>
+
 /* input bar */
 form {
     display: flex;
