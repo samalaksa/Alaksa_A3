@@ -3,6 +3,7 @@ import trashIcon from "$lib/img/trash.png"
 import editIcon from "$lib/img/pen.png"
 import checkmIcon from "$lib/img/checkM.png"
 import flowerImg from "$lib/img/flower.png"
+import { fly } from 'svelte/transition';
 let todoItem = $state('');
 let todoList = $state([]);
 
@@ -42,7 +43,7 @@ $inspect(todoList);
 <div class="todo-list-container">
     <ul>
         {#each todoList as item, index}
-            <li>
+            <li in:fly={{ x: -200, duration: 500 }} out:fly={{ x:200, duration: 500}}>
               {#if item.isEditing}
                 <div class="todo-item">
                   <input
