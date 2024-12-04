@@ -1,4 +1,5 @@
 <script>
+import {onMount} from 'svelte';
 import trashIcon from "$lib/img/trash.png"
 import editIcon from "$lib/img/pen.png"
 import checkmIcon from "$lib/img/checkM.png"
@@ -6,6 +7,18 @@ import flowerImg from "$lib/img/flower.png"
 import { fly } from 'svelte/transition';
 let todoItem = $state('');
 let todoList = $state([]);
+let storedList;
+
+onMount(() => {
+  storedList = localStorage.getItem('storedList');
+  if (storedList) {
+    todoList = (JSON.parse(storedList));
+  }
+})
+
+function updateList() {
+    return storedList = localStorage.setItem('storedList', JSON.stringify(todoList));
+}
 
 function addItem(event) {
     event.preventDefault();
@@ -17,20 +30,25 @@ function addItem(event) {
         done: false,
         isEditing: false,
     }];
-    todoItem = "";
+    
+    todoItem = '';
+    updateList();
 }
 function removeItem(index) {
     todoList = todoList.toSpliced(index, 1);
+    updateList();
 }
 function toggleEdit(index) {
   todoList = todoList.map((item, i) =>
   i === index ? { ...item, isEditing: !item.isEditing } : item
   );
+  updateList();
 }
 function updateItem(index, newText) {
   todoList = todoList.map((item, i) =>
   i === index ? { ...item, text: newText, isEditing: false } : item
   );
+  updateList();
 }
 $inspect(todoList);
 </script>
@@ -43,7 +61,7 @@ $inspect(todoList);
 <div class="todo-list-container">
     <ul>
         {#each todoList as item, index}
-            <li in:fly={{ x: -200, duration: 500 }} out:fly={{ x:200, duration: 500}}>
+            <li in:fly={{ y: -10, duration: 500 }} out:fly={{ x:20, duration: 500}}>
               {#if item.isEditing}
                 <div class="todo-item">
                   <input
