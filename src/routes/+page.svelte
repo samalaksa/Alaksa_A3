@@ -11,7 +11,7 @@
     let currentList = todoLists[0];
     let isSidebarOpen = false;
 
-    // Functions to control the sidebar and create new lists
+
   const toggleSidebar = () => {
     isSidebarOpen = !isSidebarOpen;
   };

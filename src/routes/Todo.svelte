@@ -1,5 +1,6 @@
 <script>
 import {onMount} from 'svelte';
+import Sidebar from './Sidebar.svelte'
 import trashIcon from "$lib/img/trash.png"
 import editIcon from "$lib/img/pen.png"
 import checkmIcon from "$lib/img/checkM.png"
