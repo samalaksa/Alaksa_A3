@@ -6,8 +6,10 @@ import checkmIcon from "$lib/img/checkM.png"
 import flowerImg from "$lib/img/flower.png"
 import { fly } from 'svelte/transition';
 
-let todoList = any[];
-export let onUpdateList = (newList) => {};
+import { props } from 'svelte';
+
+let todoLists = props('todoList', []);
+let onUpdateList;
 
 let todoItem = $state('');
 let storedList;
