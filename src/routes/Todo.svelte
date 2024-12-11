@@ -5,8 +5,11 @@ import editIcon from "$lib/img/pen.png"
 import checkmIcon from "$lib/img/checkM.png"
 import flowerImg from "$lib/img/flower.png"
 import { fly } from 'svelte/transition';
+
+let todoList = any[];
+export let onUpdateList = (newList) => {};
+
 let todoItem = $state('');
-let todoList = $state([]);
 let storedList;
 
 onMount(() => {
@@ -18,6 +21,7 @@ onMount(() => {
 
 function updateList() {
     return storedList = localStorage.setItem('storedList', JSON.stringify(todoList));
+    onUpdateList(todoList);
 }
 
 function addItem(event) {
