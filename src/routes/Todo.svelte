@@ -8,7 +8,7 @@ import flowerImg from "$lib/img/flower.png"
 import { fly } from 'svelte/transition';
 
 
-let { todoLists = 'todoList', [] } = $props();
+let { todoList = 'todoList', [] } = $props();
 let onUpdateList;
 
 let todoItem = $state('');
