@@ -7,56 +7,52 @@ import checkmIcon from "$lib/img/checkM.png"
 import flowerImg from "$lib/img/flower.png"
 import { fly } from 'svelte/transition';
 
-
-let { todoList = 'todoList', [] } = $props();
-let onUpdateList;
+let {onUpdateList, todoList, listItems, storedList} = $props(); 
 
 let todoItem = $state('');
-let storedList;
 
-onMount(() => {
-  storedList = localStorage.getItem('storedList');
-  if (storedList) {
-    todoList = (JSON.parse(storedList));
-  }
+$effect(() => {
+  listItems = todoList.items;
 })
 
-function updateList() {
-    return storedList = localStorage.setItem('storedList', JSON.stringify(todoList));
-    onUpdateList(todoList);
-}
+
+//$inspect('todo list items', listItems);
+
 
 function addItem(event) {
     event.preventDefault();
     if (todoItem == '') {
         return;
     }
-    todoList = [...todoList, {
+    listItems.push( {
         text: todoItem,
         done: false,
         isEditing: false,
-    }];
+    });
     
     todoItem = '';
-    updateList();
+    //updateLocal();
 }
+
 function removeItem(index) {
-    todoList = todoList.toSpliced(index, 1);
-    updateList();
+  listItems = listItems.toSpliced(index, 1);
+  //updateLocal();
 }
+
 function toggleEdit(index) {
-  todoList = todoList.map((item, i) =>
+  listItems = listItems.map((item, i) =>
   i === index ? { ...item, isEditing: !item.isEditing } : item
   );
-  updateList();
+ // updateLocal();
 }
+
 function updateItem(index, newText) {
-  todoList = todoList.map((item, i) =>
+  listItems = listItems.map((item, i) =>
   i === index ? { ...item, text: newText, isEditing: false } : item
   );
-  updateList();
+ // updateLocal();
 }
-$inspect(todoList);
+//$inspect('loaded list:', todoList);
 </script>
 
 <form onsubmit={addItem}>
@@ -66,7 +62,7 @@ $inspect(todoList);
 
 <div class="todo-list-container">
     <ul>
-        {#each todoList as item, index}
+        {#each listItems as item, index}
             <li in:fly={{ y: -10, duration: 500 }} out:fly={{ x:20, duration: 500}}>
               {#if item.isEditing}
                 <div class="todo-item">

@@ -1,13 +1,31 @@
 <script>
-  let {
+let { 
   isOpen = false,
   onClose = () => {},
   onCreateNewList = () => {},
   onSelectList = (listId) => {},
-  lists = []
-    } = $props();
+  todoLists = [],
+  currentList, currentListId
+} = $props();
+
   </script>
   
+  <div class={`sidebar ${isOpen ? 'open' : ''}`}>
+    <!-- Button to create a new list -->
+    <button onclick={onCreateNewList}>Create New List</button>
+    <h3>Existing Lists</h3>
+    
+    <!-- List of existing lists -->
+    {#each todoLists as list}
+      <button class="list-item" onclick={() => onSelectList(list.id)}>
+        {list.name}
+      </button>
+    {/each}
+    
+    <!-- Button to close the sidebar -->
+    <button onclick={onClose}>Close</button>
+  </div>
+
   <style>
     .sidebar {
       position: fixed;
@@ -55,19 +73,3 @@
       background-color: #f0f0f0;
     }
   </style>
-  
-  <div class={`sidebar ${isOpen ? 'open' : ''}`}>
-    <!-- Button to create a new list -->
-    <button onclick={onCreateNewList}>Create New List</button>
-    <h3>Existing Lists</h3>
-    
-    <!-- List of existing lists -->
-    {#each lists as list}
-      <button class="list-item" onclick={() => onSelectList(list.id)}>
-        {list.name}
-      </button>
-    {/each}
-    
-    <!-- Button to close the sidebar -->
-    <button onclick={onClose}>Close</button>
-  </div>
