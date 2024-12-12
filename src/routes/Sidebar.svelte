@@ -1,9 +1,11 @@
 <script>
-    export let isOpen = false;
-    export let onClose = () => {};
-    export let onCreateNewList = () => {};
-    export let onSelectList = (listId) => {};
-    export let lists = [];
+  let {
+  isOpen = false,
+  onClose = () => {},
+  onCreateNewList = () => {},
+  onSelectList = (listId) => {},
+  lists = []
+    } = $props();
   </script>
   
   <style>
@@ -56,16 +58,16 @@
   
   <div class={`sidebar ${isOpen ? 'open' : ''}`}>
     <!-- Button to create a new list -->
-    <button on:click={onCreateNewList}>Create New List</button>
+    <button onclick={onCreateNewList}>Create New List</button>
     <h3>Existing Lists</h3>
     
     <!-- List of existing lists -->
     {#each lists as list}
-      <button class="list-item" on:click={() => onSelectList(list.id)}>
+      <button class="list-item" onclick={() => onSelectList(list.id)}>
         {list.name}
       </button>
     {/each}
     
     <!-- Button to close the sidebar -->
-    <button on:click={onClose}>Close</button>
+    <button onclick={onClose}>Close</button>
   </div>
