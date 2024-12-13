@@ -318,13 +318,13 @@ span.done {
 /* Media Query */
 @media (max-width: 768px) {
     .todo-list-container {
-      width: 50%; /* Smaller font size for screens 768px or smaller */
+      width: 50%;
     }
   }
 
   @media (max-width: 480px) {
     .todo-list-container {
-      width: 50%; /* Even smaller font size for screens 480px or smaller */
+      width: 50%;
     }
   }
 </style>

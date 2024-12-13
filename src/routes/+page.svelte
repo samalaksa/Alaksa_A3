@@ -62,21 +62,21 @@ $effect(() => {
       list.id === currentListId ? { ...list, items: updatedList } : list
     );
   };
-  // Function to edit the name of a list
+  // To edit the name of a list
   const editListName = (listId, newName) => {
     todoLists = todoLists.map((list) => 
       list.id === listId ? { ...list, name: newName } : list
     );
-    currentList = todoLists.find(list => list.id === currentListId); // Update current list after renaming
+    currentList = todoLists.find(list => list.id === currentListId);
   };
 
-  // Function to delete a list
+  // To delete a list
   const deleteList = (listId) => {
     todoLists = todoLists.filter((list) => list.id !== listId);
     if (todoLists.length > 0) {
-      currentListId = todoLists[0].id; // Set the first list as the current list if one exists
+      currentListId = todoLists[0].id;
     } else {
-      currentListId = null; // No lists left, reset current list
+      currentListId = null;
     }
   };
 
@@ -117,12 +117,12 @@ $effect(() => {
     button[type="menubutton"] {
       background: none; 
       border: none;
-      padding: 12px; /* Adjust padding for better button appearance */
+      padding: 12px;
       cursor: pointer;
       outline: none;
-      position: fixed;  /* Fix button in place */
-      top: 10px;         /* Adjust the top distance */
-      right: -310px;        /* Adjust the left distance */
+      position: fixed;
+      top: 10px;       
+      right: -310px;    
       z-index: 99;   
       }
 
@@ -137,7 +137,7 @@ $effect(() => {
  /* Load and update LocalStorage */
  @media (max-width: 768px) {
     h1 {
-      font-size: 2.5rem; /* Smaller font size for screens 768px or smaller */
+      font-size: 2.5rem;
     }
     .underline {
       width: 50%;
@@ -149,7 +149,7 @@ $effect(() => {
 
   @media (max-width: 480px) {
     h1 {
-      font-size: 2rem; /* Even smaller font size for screens 480px or smaller */
+      font-size: 2rem; 
     }
   }
 </style>
