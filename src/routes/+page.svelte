@@ -61,6 +61,23 @@ $effect(() => {
       list.id === currentListId ? { ...list, items: updatedList } : list
     );
   };
+  // Function to edit the name of a list
+  const editListName = (listId, newName) => {
+    todoLists = todoLists.map((list) => 
+      list.id === listId ? { ...list, name: newName } : list
+    );
+    currentList = todoLists.find(list => list.id === currentListId); // Update current list after renaming
+  };
+
+  // Function to delete a list
+  const deleteList = (listId) => {
+    todoLists = todoLists.filter((list) => list.id !== listId);
+    if (todoLists.length > 0) {
+      currentListId = todoLists[0].id; // Set the first list as the current list if one exists
+    } else {
+      currentListId = null; // No lists left, reset current list
+    }
+  };
 
 </script>
 
@@ -78,6 +95,8 @@ $effect(() => {
     {todoLists}
     {currentList}
     {currentListId}
+    onUpdateListName={editListName}
+    onDeleteList={deleteList}
   />
 
   <Todo todoList={currentList} onUpdateList={updateList}  />

@@ -5,10 +5,15 @@
     onCreateNewList = (newListName) => {},
     onSelectList = (listId) => {},
     todoLists = [],
-    currentList, currentListId
+    currentList, currentListId,
+    onDeleteList = (listId) => {},
+    onUpdateListName = (listId, newName) => {},
   } = $props();
   let newListName = $state('');
   let isCreatingNewList = $state(false);
+  let isEditing = $state(false);
+  let editListId = $state(null);
+  let editListName = $state('');
 
   const createList = () => {
     if (newListName.trim()) {
@@ -22,6 +27,33 @@
   const cancelCreateList = () => {
     newListName = '';
     isCreatingNewList = false; 
+  };
+  // Toggle edit mode for a list
+  const toggleEditList = (listId, name) => {
+    editListId = listId;
+    editListName = name;
+    isEditing = true;
+  };
+
+  // Save the edited list name
+  const saveEditListName = () => {
+    if (editListName.trim()) {
+      onUpdateListName(editListId, editListName);
+      isEditing = false;
+      editListId = null;
+      editListName = '';
+    }
+  };
+
+  // Cancel editing the list name
+  const cancelEditList = () => {
+    isEditing = false;
+    editListId = null;
+    editListName = '';
+  };
+
+  const deleteList = (listId) => {
+    onDeleteList(listId);
   };
 </script>
 
@@ -48,11 +80,34 @@
   
   <!-- List of existing lists -->
   {#each todoLists as list}
-    <button class="list-item" onclick={() => onSelectList(list.id)}>
+    <div class="list-item">
+      {#if isEditing && list.id === editListId}
+      <div class="edit-mode">
+        <input
+        type="text"
+        bind:value={editListName}
+        onkeydown={(e) => e.key === 'Enter' && saveEditListName()}
+      />
+      <button onclick={saveEditListName}>Save</button>
+          <button onclick={cancelEditList}>Cancel</button>
+    </div>
+  {:else}
+  <div class="list-name">
+    <button class="list-item-button" onclick={() => onSelectList(list.id)}>
       {list.name}
     </button>
-  {/each}
-  
+    <button class="edit-button" onclick={() => toggleEditList(list.id, list.name)}>
+      ✏️
+    </button>
+    <button class="delete-button" onclick={() => deleteList(list.id)}>
+      🗑️
+    </button>
+  </div>
+{/if}
+</div>
+{/each}
+
+
   <!-- Button to close the sidebar -->
   <button onclick={onClose}>Close</button>
 </div>
@@ -139,5 +194,53 @@
 
   .new-list-input button:hover {
     background-color: #b65c9c;
+  }
+  .edit-mode input {
+    width: 80%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .edit-mode button {
+    padding: 5px 10px;
+    margin-left: 10px;
+    background-color: #DC7AC0;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .edit-mode button:hover {
+    background-color: #b65c9c;
+  }
+
+  .list-item-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+  }
+
+  .list-item-button:hover {
+    text-decoration: underline;
+  }
+
+  .edit-button,
+  .delete-button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .edit-button:hover {
+    color: #DC7AC0;
+  }
+
+  .delete-button:hover {
+    color: red;
   }
 </style>
