@@ -10,8 +10,7 @@
 let currentListId = $state('');
 let currentList = $state('');
 let todoLists = $state([
-    {id: 1, name: 'School', items: [] },
-    {id: 2, name: 'Personal', items: []},
+    {id: 1, name: 'Self Care', items: [] },
 ]);
 
 /* Load and update LocalStorage
@@ -71,11 +70,10 @@ $inspect('current list items', currentList.items);
 
 </script>
 
-    <h2>Self Care</h2>
-    <img class="underline" src="{underline}" alt="trash"/>
     <h1>TO DO LIST</h1>
-    <button onclick={toggleSidebar}>Open Sidebar</button>
-    <h2>Current List: {currentList.name}</h2>
+    <img class="underline" src="{underline}" alt="squiggly line"/>
+    <button onclick={toggleSidebar}>Create New List</button>
+    <h2>{currentList.name}</h2>
     
 
     <Sidebar
@@ -91,8 +89,36 @@ $inspect('current list items', currentList.items);
   <Todo todoList={currentList} onUpdateList={updateList}  />
 
 <style>
+    h1 {
+      padding-top: 5vw;
+    }
+    h2 {
+    padding-bottom: 3vw;
+  }
     .underline {
+        padding-bottom: 3vw;
         width: 35%;
         opacity: 30%;
     }
+    button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #DC7AC0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+    button:hover {
+    background-color: #b65c9c;
+  }
+  
+button {
+    font-family: "Fira Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
 </style>
