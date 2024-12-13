@@ -122,7 +122,7 @@ $effect(() => {
       outline: none;
       position: fixed;  /* Fix button in place */
       top: 10px;         /* Adjust the top distance */
-      right: -320px;        /* Adjust the left distance */
+      right: -310px;        /* Adjust the left distance */
       z-index: 99;   
       }
 
