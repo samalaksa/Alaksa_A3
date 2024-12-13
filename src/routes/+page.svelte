@@ -115,4 +115,17 @@ button {
     font-weight: 400;
     font-style: normal;
   }
+ /* Media Query */ 
+ /* Load and update LocalStorage */
+ @media (max-width: 768px) {
+    h1 {
+      font-size: 2rem; /* Smaller font size for screens 768px or smaller */
+    }
+  }
+
+  @media (max-width: 480px) {
+    h1 {
+      font-size: 1.5rem; /* Even smaller font size for screens 480px or smaller */
+    }
+  }
 </style>
