@@ -1,4 +1,7 @@
 <script>
+  import editIcon2 from "$lib/img/pen2.png"
+  import trashIcon2 from "$lib/img/trash2.png"
+
   let { 
     isOpen = false,
     onClose = () => {},
@@ -59,7 +62,7 @@
 
 <div class={`sidebar ${isOpen ? 'open' : ''}`}>
   {#if !isCreatingNewList}
-    <button onclick={() => isCreatingNewList = true}>Create New List</button>
+    <button class="create-new" onclick={() => isCreatingNewList = true}>Create New List</button>
   {/if}
 
   <!-- New list name input when creating a new list -->
@@ -71,12 +74,12 @@
         placeholder="Enter list name"
         onkeydown={(e) => e.key === 'Enter' && createList()}
       />
-      <button onclick={createList}>Save</button>
-      <button onclick={cancelCreateList}>Cancel</button>
+      <button class="saveB" onclick={createList}>Save</button>
+      <button class="cancelB" onclick={cancelCreateList}>Cancel</button>
     </div>
   {/if}
 
-  <h3>Existing Lists</h3>
+  <h3>YOUR LISTS</h3>
   
   <!-- List of existing lists -->
   {#each todoLists as list}
@@ -88,20 +91,21 @@
         bind:value={editListName}
         onkeydown={(e) => e.key === 'Enter' && saveEditListName()}
       />
-      <button onclick={saveEditListName}>Save</button>
+      <div class="editcancel">
+        <button onclick={saveEditListName}>Save</button>
           <button onclick={cancelEditList}>Cancel</button>
+      </div>
+      
     </div>
   {:else}
   <div class="list-name">
     <button class="list-item-button" onclick={() => onSelectList(list.id)}>
       {list.name}
     </button>
-    <button class="edit-button" onclick={() => toggleEditList(list.id, list.name)}>
-      ✏️
-    </button>
-    <button class="delete-button" onclick={() => deleteList(list.id)}>
-      🗑️
-    </button>
+    <div class="edit-delete">
+    <button class="edit-button" onclick={() => toggleEditList(list.id, list.name)}><img class="edit" src="{editIcon2}" alt="Edit" /></button>
+    <button class="delete-button" onclick={() => deleteList(list.id)}><img class="trash" src="{trashIcon2}" alt="trash"/></button>
+    </div>
   </div>
 {/if}
 </div>
@@ -109,11 +113,18 @@
 
 
   <!-- Button to close the sidebar -->
-  <button onclick={onClose}>Close</button>
+  <button class="close-sideB" onclick={onClose}>Close</button>
 </div>
 
 <style>
+  .create-new {
+    font-size: 1.2rem;
+    font-family: "Fira Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
   h3 {
+    font-size: 1.5rem;
     font-family: "Emblema One", system-ui;
     font-weight: 400;
     font-style: normal;
@@ -158,7 +169,8 @@
   }
 
   .list-item {
-    padding: 10px;
+    padding: 0px 10px;
+    padding-top: 10px;
     cursor: pointer;
     background-color: #f9f9f9;
     border-radius: 5px;
@@ -178,7 +190,7 @@
   }
 
   .new-list-input input {
-    padding: 10px;
+    padding: 8px;
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 14px;
@@ -200,11 +212,12 @@
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-family: "Fira Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
   }
 
   .edit-mode button {
-    padding: 5px 10px;
-    margin-left: 10px;
     background-color: #DC7AC0;
     color: white;
     border: none;
@@ -219,28 +232,52 @@
   .list-item-button {
     background: none;
     border: none;
-    font-size: 16px;
+    font-size: 1.2rem;
     color: #333;
     cursor: pointer;
+    font-family: "Fira Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
   }
 
   .list-item-button:hover {
-    text-decoration: underline;
+    text-decoration:#b65c9c;
+    }
+
+  .edit-delete {
+    margin-bottom: 50px;
+  }
+
+  .editcancel {
+    font-family: "Fira Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
   }
 
   .edit-button,
   .delete-button {
     background: none;
     border: none;
-    font-size: 18px;
     cursor: pointer;
   }
 
+  .edit {
+    width: 24px;
+    height: 24px;
+  }
+
+  .trash {
+    width: 18px;
+    height: 18px;
+  }
+  
   .edit-button:hover {
     color: #DC7AC0;
   }
-
-  .delete-button:hover {
-    color: red;
+  .close-sideB {
+    font-size: 1.2rem;
+    font-family: "Fira Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
   }
 </style>

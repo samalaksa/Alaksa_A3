@@ -3,6 +3,7 @@
     import Sidebar from './Sidebar.svelte'
     import '../app.css';
     import underline from "$lib/img/underline.png"
+    import menu from "$lib/img/menu.png"
 
 // LIST MANAGER
 let storedList, storedId;
@@ -83,7 +84,7 @@ $effect(() => {
 
     <h1>TO DO LIST</h1>
     <img class="underline" src="{underline}" alt="squiggly line"/>
-    <button onclick={toggleSidebar}>Create New List</button>
+    <button type="menubutton" onclick={toggleSidebar}><img class="list-menu" src="{menu}" alt="menu" /></button>
     <h2>{currentList.name}</h2>
     
 
@@ -113,27 +114,25 @@ $effect(() => {
         width: 35%;
         opacity: 30%;
     }
-    button {
-    margin-left: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #DC7AC0;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
+    button[type="menubutton"] {
+      background: none; 
+      border: none;
+      padding: 12px; /* Adjust padding for better button appearance */
+      cursor: pointer;
+      outline: none;
+      position: fixed;  /* Fix button in place */
+      top: 10px;         /* Adjust the top distance */
+      right: -340px;        /* Adjust the left distance */
+      z-index: 1000;   
+      }
+
+  button[type="menubutton"]:focus {
+  outline: none;
   }
   
-    button:hover {
-    background-color: #b65c9c;
-  }
-  
-button {
-    font-family: "Fira Sans", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
+.list-menu {
+  width: 8%;
+}
  /* Media Query */ 
  /* Load and update LocalStorage */
  @media (max-width: 768px) {
@@ -144,7 +143,7 @@ button {
       width: 50%;
     }
     h2 {
-      font-size: 2.5rem;
+      font-size: 3rem;
     }
   }
 
