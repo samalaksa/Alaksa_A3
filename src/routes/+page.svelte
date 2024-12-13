@@ -4,44 +4,38 @@
     import '../app.css';
     import underline from "$lib/img/underline.png"
 
-    
 // LIST MANAGER
-//let storedList, storedId;
-let currentListId = $state('');
-let currentList = $state('');
+let storedList, storedId;
+let currentListId = $state(1);
+let currentList = $state([]);
 let todoLists = $state([
     {id: 1, name: 'Self Care', items: [] },
 ]);
 
-/* Load and update LocalStorage
-onMount(() => {
-  storedList = localStorage.getItem('storedList');
+/* Load and update LocalStorage */
+$effect.pre(() => {
+  const storedList = localStorage.getItem('todoLists');
+  const storedId = localStorage.getItem('currentListId');
   if (storedList) {
-    console.log('there is storage!')
-    currentList = (JSON.parse(storedList));
-  } 
-  storedId = localStorage.getItem('currentListId');
-  if (storedId) {
-    currentListId = storedId;
-  } else {
-    currentListId = 1;
+    todoLists = JSON.parse(storedList);
   }
-})
-*/
+  if (storedId) {
+    currentListId = JSON.parse(storedId);
+  }
+}); 
+
+// update localstorage and current list 
 $effect(() => {
-    currentList = todoLists.find(list => list.id === currentListId)
-  })
-currentListId = 1;
-$inspect('current list', currentList);
-$inspect('current list items', currentList.items);
+    currentList = todoLists.find(list => list.id === currentListId);  
+    if (currentListId) {
+      localStorage.setItem('currentListId', currentListId);
+    }
+    if (todoLists) {
+      localStorage.setItem('todoLists', JSON.stringify(todoLists));
+    }
+});
 
   let isSidebarOpen = $state(false);
-   /*
-  $effect(() => {
-    if (currentListId) { localStorage.setItem('currentListId', currentListId)};
-  })
-   */
-
 
   const toggleSidebar = () => {
     isSidebarOpen = !isSidebarOpen;
@@ -51,8 +45,8 @@ $inspect('current list items', currentList.items);
     isSidebarOpen = false;
   };
 
-  const createNewList = () => {
-    const newList = { id: todoLists.length + 1, name: `New List ${todoLists.length + 1}`, items: [] };
+  const createNewList = (newListName) => {
+    const newList = { id: todoLists.length + 1, name: newListName, items: [] };
     todoLists = [...todoLists, newList];
     currentListId = newList.id;
   };

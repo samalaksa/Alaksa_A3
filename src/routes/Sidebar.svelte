@@ -2,12 +2,11 @@
   let { 
     isOpen = false,
     onClose = () => {},
-    onCreateNewList = () => {},
+    onCreateNewList = (newListName) => {},
     onSelectList = (listId) => {},
     todoLists = [],
     currentList, currentListId
   } = $props();
-
   let newListName = $state('');
   let isCreatingNewList = $state(false);
 
@@ -24,7 +23,6 @@
     newListName = '';
     isCreatingNewList = false; 
   };
-
 </script>
 
 <div class={`sidebar ${isOpen ? 'open' : ''}`}>

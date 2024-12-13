@@ -7,17 +7,13 @@ import checkmIcon from "$lib/img/checkM.png"
 import flowerImg from "$lib/img/flower.png"
 import { fly } from 'svelte/transition';
 
-let {onUpdateList, todoList, listItems, storedList} = $props(); 
-
+let {onUpdateList, todoList, storedList} = $props(); 
+let listItems = $state([]);
 let todoItem = $state('');
 
 $effect(() => {
   listItems = todoList.items;
 })
-
-
-//$inspect('todo list items', listItems);
-
 
 function addItem(event) {
     event.preventDefault();
@@ -29,30 +25,24 @@ function addItem(event) {
         done: false,
         isEditing: false,
     });
-    
     todoItem = '';
-    //updateLocal();
 }
 
 function removeItem(index) {
-  listItems = listItems.toSpliced(index, 1);
-  //updateLocal();
+  listItems.splice(index, 1);
 }
 
 function toggleEdit(index) {
   listItems = listItems.map((item, i) =>
   i === index ? { ...item, isEditing: !item.isEditing } : item
   );
- // updateLocal();
 }
 
 function updateItem(index, newText) {
   listItems = listItems.map((item, i) =>
   i === index ? { ...item, text: newText, isEditing: false } : item
   );
- // updateLocal();
 }
-//$inspect('loaded list:', todoList);
 </script>
 
 <form onsubmit={addItem}>
