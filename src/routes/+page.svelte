@@ -123,7 +123,7 @@ $effect(() => {
       position: fixed;  /* Fix button in place */
       top: 10px;         /* Adjust the top distance */
       right: -340px;        /* Adjust the left distance */
-      z-index: 1000;   
+      z-index: 99;   
       }
 
   button[type="menubutton"]:focus {
