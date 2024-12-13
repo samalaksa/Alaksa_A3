@@ -119,13 +119,16 @@ button {
  /* Load and update LocalStorage */
  @media (max-width: 768px) {
     h1 {
-      font-size: 2rem; /* Smaller font size for screens 768px or smaller */
+      font-size: 2.5rem; /* Smaller font size for screens 768px or smaller */
+    }
+    .underline {
+      width: 50%;
     }
   }
 
   @media (max-width: 480px) {
     h1 {
-      font-size: 1.5rem; /* Even smaller font size for screens 480px or smaller */
+      font-size: 2rem; /* Even smaller font size for screens 480px or smaller */
     }
   }
 </style>
