@@ -97,14 +97,13 @@ function updateItem(index, newText) {
       left: 0;
       width: 100%;
       z-index: -1;
-      text-align: right;
-      pointer-events: none; 
+      text-align: center;
+      pointer-events: none;
   }
 
   .flower-image-container img {
       width: auto;
       height: 400px;
-      margin-left: 450px; 
       opacity: 20%;
   }
 /* input bar */
