@@ -8,29 +8,26 @@
     currentList, currentListId
   } = $props();
 
-  // New state for handling the creation of a new list
-  let newListName = $state('');  // Name of the new list
-  let isCreatingNewList = $state(false); // Flag to show/hide the input form for creating a new list
+  let newListName = $state('');
+  let isCreatingNewList = $state(false);
 
-  // Handle the action when user wants to create a new list
   const createList = () => {
     if (newListName.trim()) {
       onCreateNewList(newListName);
-      newListName = ''; // Reset the input field
-      isCreatingNewList = false; // Hide the input field after creating the list
+      newListName = ''; 
+      isCreatingNewList = false
     }
   };
 
-  // Cancel creating a new list (resets the name input)
+  // Cancel button
   const cancelCreateList = () => {
     newListName = '';
-    isCreatingNewList = false; // Hide the input field
+    isCreatingNewList = false; 
   };
 
 </script>
 
 <div class={`sidebar ${isOpen ? 'open' : ''}`}>
-  <!-- Button to create a new list, toggle form display -->
   {#if !isCreatingNewList}
     <button onclick={() => isCreatingNewList = true}>Create New List</button>
   {/if}
