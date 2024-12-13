@@ -124,6 +124,9 @@ button {
     .underline {
       width: 50%;
     }
+    h2 {
+      font-size: 2.5rem;
+    }
   }
 
   @media (max-width: 480px) {
